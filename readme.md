@@ -16,3 +16,5 @@ regsvr32.exe /s "<путь к директории>\DeviareCOM64.dll"
 regsvr32.exe /u "<путь к директории>\DeviareCOM.dll"
 regsvr32.exe /u "<путь к директории>\DeviareCOM64.dll"
 ```
+
+В проектке используется пакет https://github.com/bars43ru/Deviare2 (оригинал https://github.com/nektra/Deviare2) с исправленной ошибкой, которая приводила к разрушению стороннего процесса в момент снятие перехватчиков.
