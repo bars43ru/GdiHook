@@ -1,0 +1,67 @@
+﻿<Window x:Class="GdiHook.View.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        mc:Ignorable="d"
+		xmlns:converters="clr-namespace:GdiHook.View.ValueConverters" xmlns:viewmodel="clr-namespace:GdiHook.ViewModel" d:DataContext="{d:DesignInstance Type=viewmodel:MainWindowViewModel}"
+        Title="MainWindow" Height="489" Width="804">
+    <Window.Resources>
+        <converters:ControleElementJsonConverter x:Key="ControleElementJsonConverter" />
+        <converters:ControleElementToImageConverter x:Key="ControleElementToImageConverter" />
+    </Window.Resources>
+    <Grid>
+        <DockPanel LastChildFill="True" Margin="5,5,5,5">
+            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,0,0,5">
+                <Button Content="Refresh" Command="{Binding Refresh}" Margin="0,0,5,0" Width="60"/>
+                <Button Content="Capture" Command="{Binding Capture}"  Margin="5,0,0,0" Width="60"/>
+            </StackPanel>
+            <TabControl x:Name="products">
+                <TabItem x:Name="windows">
+                    <TabItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Margin="3">List windows</TextBlock>
+                        </StackPanel>
+                    </TabItem.Header>
+                    <TabItem.Content>
+                        <ScrollViewer Name="scrollViewer">
+                            <StackPanel  DockPanel.Dock="Top" Orientation="Vertical" Margin="0,0,0,5" >
+                                <ListView ItemsSource="{Binding Path=Windows}" SelectedItem="{Binding Path=Selected}" >
+                                    <ListView.View>
+                                        <GridView>
+                                            <GridViewColumn Header="hwnd" DisplayMemberBinding="{Binding Key}" />
+                                            <GridViewColumn Header="title" DisplayMemberBinding="{Binding Value}" />
+                                        </GridView>
+                                    </ListView.View>
+                                </ListView>
+                            </StackPanel>
+                        </ScrollViewer>
+                    </TabItem.Content>
+                </TabItem>
+                <TabItem x:Name="imageWindow">
+                    <TabItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Margin="3">Image window (after hook)</TextBlock>
+                        </StackPanel>
+                    </TabItem.Header>
+                    <TabItem.Content>
+                        <ScrollViewer Name="scrollViewer1">
+                            <Image Source="{Binding Control, Converter={StaticResource ControleElementToImageConverter}, Mode=OneWay}" Stretch="None" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        </ScrollViewer>
+                    </TabItem.Content>
+                </TabItem>
+                <TabItem x:Name="jsonWindow">
+                    <TabItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Margin="3">Json object (after hook)</TextBlock>
+                        </StackPanel>
+                    </TabItem.Header>
+                    <TabItem.Content>
+                        <TextBox Grid.Column="1" AcceptsReturn="True" Text="{Binding Path=Control, Converter={StaticResource ControleElementJsonConverter}, Mode=OneWay}" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True" IsReadOnly="True"/>
+                    </TabItem.Content>                    
+                </TabItem>
+
+            </TabControl>
+        </DockPanel>
+    </Grid>
+</Window>

@@ -1,0 +1,9 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/src/obj
+/src/.vs/GdiHook/v16
+/src/bin/Debug/net5.0-windows
+/.vs
+/src/.vs/GdiHook/DesignTimeBuild
